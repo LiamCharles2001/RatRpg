@@ -1,0 +1,4 @@
+name: Ratrpg
+version: '${project.version}'
+main: com.ratrpg.Ratrpg
+api-version: 1.19
