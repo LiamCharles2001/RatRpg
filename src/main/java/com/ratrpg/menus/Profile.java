@@ -2,6 +2,7 @@ package com.ratrpg.menus;
 
 import com.ratrpg.Ratrpg;
 import com.ratrpg.utilities.MenuUtil;
+import com.ratrpg.utilities.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,17 +29,17 @@ public class Profile implements Listener {
     public void openProfile(Player player) {
         Inventory inv = Bukkit.createInventory(player, 9 * 3, invName);
 
-        inv.setItem(3, MenuUtil.getItem(new ItemStack(Material.FISHING_ROD), "Fishing", "&aTEXT"));
-        inv.setItem(4, MenuUtil.getItem(new ItemStack(Material.WHITE_WOOL), "Tailoring", "&aTEXT"));
-        inv.setItem(5, MenuUtil.getItem(new ItemStack(Material.IRON_HOE), "Gathering", "&aTEXT"));
+        inv.setItem(3, MenuUtil.getItem(new ItemStack(Material.FISHING_ROD), "Fishing", "&aLevel: ", "&a0/0"));
+        inv.setItem(4, MenuUtil.getItem(new ItemStack(Material.WHITE_WOOL), "Tailoring", "&aLevel: ", "&a0/0"));
+        inv.setItem(5, MenuUtil.getItem(new ItemStack(Material.IRON_HOE), "Gathering", "&aLevel: ", "&a0/0"));
 
-        inv.setItem(12, MenuUtil.getItem(new ItemStack(Material.IRON_PICKAXE), "Mining", "&aTEXT"));
-        inv.setItem(13, MenuUtil.getItem(new ItemStack(Material.ANVIL), "Blacksmithing", "&aTEXT"));
-        inv.setItem(14, MenuUtil.getItem(new ItemStack(Material.BOW), "Hunting", "&aTEXT"));
+        inv.setItem(12, MenuUtil.getItem(new ItemStack(Material.IRON_PICKAXE), "Mining", "&aLevel: ", "&a0/0"));
+        inv.setItem(13, MenuUtil.getItem(new ItemStack(Material.ANVIL), "Blacksmithing", "&aLevel: ", "&a0/0"));
+        inv.setItem(14, MenuUtil.getItem(new ItemStack(Material.BOW), "Hunting", "&aLevel: ", "&a0/0"));
 
-        inv.setItem(21, MenuUtil.getItem(new ItemStack(Material.IRON_AXE), "Woodcutting", "&aTEXT"));
-        inv.setItem(22, MenuUtil.getItem(new ItemStack(Material.MUSHROOM_STEW), "Cooking", "&aTEXT"));
-        inv.setItem(23, MenuUtil.getItem(new ItemStack(Material.NETHERITE_SWORD), "Slayer", "&aTEXT"));
+        inv.setItem(21, MenuUtil.getItem(new ItemStack(Material.IRON_AXE), "Woodcutting", "&aLevel: ", "&a0/0"));
+        inv.setItem(22, MenuUtil.getItem(new ItemStack(Material.MUSHROOM_STEW), "Cooking", "&aLevel: ", "&a0/0"));
+        inv.setItem(23, MenuUtil.getItem(new ItemStack(Material.NETHERITE_SWORD), "Slayer", "&aLevel: ", "&a0/0"));
 
         player.openInventory(inv);
     }
@@ -54,11 +55,10 @@ public class Profile implements Listener {
         Player player = (Player) event.getWhoClicked();
         int slot = event.getSlot();
 
-        //TODO switch to switch
-        if (slot == 5) {
-
-            //Message.send(player, "Clicked");
-
+        switch (slot){
+            case 5:
+                Message.send(player, "click");
+                break;
         }
     }
 }

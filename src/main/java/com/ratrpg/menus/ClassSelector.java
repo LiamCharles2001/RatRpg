@@ -32,11 +32,11 @@ public class ClassSelector implements Listener {
     public void openClassSelector(Player player) {
         Inventory inv = Bukkit.createInventory(player, 9 * 1, invName);
 
-        inv.setItem(2, MenuUtil.getItem(new ItemStack(Material.ENCHANTED_BOOK), "Mage", "&aTEXT"));
-        inv.setItem(3, MenuUtil.getItem(new ItemStack(Material.SHIELD), "Paladin", "&aTEXT"));
-        inv.setItem(4, MenuUtil.getItem(new ItemStack(Material.DIAMOND_SWORD), "Warrior", "&aTEXT"));
-        inv.setItem(5, MenuUtil.getItem(new ItemStack(Material.BOW), "Ranger", "&aTEXT"));
-        inv.setItem(6, MenuUtil.getItem(new ItemStack(Material.IRON_SWORD), "Rogue", "&aTEXT"));
+        inv.setItem(2, MenuUtil.getItem(new ItemStack(Material.ENCHANTED_BOOK), "Mage", "&aA Powerful spell caster that uses magic to blast their enemies"));
+        inv.setItem(3, MenuUtil.getItem(new ItemStack(Material.SHIELD), "Paladin", "&aA holy hero that smites their enemies with holy light"));
+        inv.setItem(4, MenuUtil.getItem(new ItemStack(Material.DIAMOND_SWORD), "Warrior", "&aLame"));
+        inv.setItem(5, MenuUtil.getItem(new ItemStack(Material.BOW), "Ranger", "&aA man who shoots others"));
+        inv.setItem(6, MenuUtil.getItem(new ItemStack(Material.IRON_SWORD), "Rogue", "&aA sneaky man who slabs people"));
 
         player.openInventory(inv);
     }

@@ -69,6 +69,10 @@ public class PlayerMemory {
         //kill player
     }
 
+    public void respawn() {
+
+    }
+
     public static int getMaxLevel() {
         return maxLevel;
     }

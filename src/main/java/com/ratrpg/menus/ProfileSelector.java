@@ -1,9 +1,11 @@
 package com.ratrpg.menus;
 
 import com.ratrpg.Ratrpg;
+import com.ratrpg.data.PlayerClass;
 import com.ratrpg.data.PlayerMemory;
 import com.ratrpg.utilities.CommandBase;
 import com.ratrpg.utilities.MenuUtil;
+import com.ratrpg.utilities.Message;
 import com.ratrpg.utilities.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,6 +18,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import static com.ratrpg.data.PlayerClass.getClassName;
+import static com.ratrpg.utilities.PlayerUtil.switchClass;
 
 public class ProfileSelector implements Listener {
 
@@ -82,39 +85,35 @@ public class ProfileSelector implements Listener {
         Player player = (Player) event.getWhoClicked();
         int slot = event.getSlot();
 
-        if (slot == 11) {
-            //Profile 1
-            PlayerUtil.savePlayerData(player);
-            PlayerUtil.switchPlayerData(player, 1);
-
-            player.closeInventory();
-
-        } else if (slot == 13) {
-            //Profile 2
-            PlayerUtil.savePlayerData(player);
-            PlayerUtil.switchPlayerData(player, 2);
-
-            player.closeInventory();
-
-        } else if (slot == 15) {
-            //Profile 3
-            PlayerUtil.savePlayerData(player);
-            PlayerUtil.switchPlayerData(player, 3);
-
-            player.closeInventory();
-        }
-
-        //TODO clean this up
-        if (slot == 2) {
-            Profile.getInstance().openProfile(player);
-        }
-        if (slot == 3) {
-            ClassSelector.getInstance().openClassSelector(player);
-        }
-        if (slot == 4) {
-            PlayerMemory memory = PlayerUtil.getPlayerMemory(player);
-            PlayerUtil.newProfileDefault(memory, memory.getSelectedProfileId());
-            player.closeInventory(); //To force a refresh
+        switch(slot){
+            case 11:
+                //Profile 1
+                PlayerUtil.savePlayerData(player);
+                PlayerUtil.switchPlayerData(player, 1);
+                player.closeInventory();
+                break;
+            case 13:
+                //Profile 2
+                PlayerUtil.savePlayerData(player);
+                PlayerUtil.switchPlayerData(player, 2);
+                player.closeInventory();
+                break;
+            case 15:
+                //Profile 3
+                PlayerUtil.savePlayerData(player);
+                PlayerUtil.switchPlayerData(player, 3);
+                player.closeInventory();
+            case 2:
+                Profile.getInstance().openProfile(player);
+                break;
+            case 3:
+                ClassSelector.getInstance().openClassSelector(player);
+                break;
+            case 4:
+                PlayerMemory memory = PlayerUtil.getPlayerMemory(player);
+                PlayerUtil.newProfileDefault(player, memory.getSelectedProfileId());
+                player.closeInventory();
+                break;
         }
     }
 }

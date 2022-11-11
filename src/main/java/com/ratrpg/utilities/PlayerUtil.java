@@ -139,7 +139,9 @@ public class PlayerUtil {
         PlayerUtil.setPlayerMemory(player, memory);
     }
 
-    //Sets the default values for any new player or profile //TODO create an overload of memory to be just player //TODO rename to just newProfile?
+    //TODO rename to newProfile
+    //TODO make a config
+    //Sets the default values for any new player or profile //TODO rename to just newProfile?
     public static void newProfileDefault(PlayerMemory memory, int profileId)
     {
         memory.setMaxHealth(100);
@@ -157,6 +159,12 @@ public class PlayerUtil {
         memory.setAgility(0);
         memory.setStrength(0);
         memory.setIntelligent(0);
+    }
+
+    public static void newProfileDefault(Player player, int profileId)
+    {
+        PlayerMemory memory = getPlayerMemory(player);
+        newProfileDefault(memory, profileId);
     }
 
     public static boolean hasNonePlayerClass(Player player) {
