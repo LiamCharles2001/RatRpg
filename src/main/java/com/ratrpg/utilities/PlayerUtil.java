@@ -15,6 +15,7 @@ import java.util.Map;
 //This class handles saving/loading for a player, along with holding the player's data in memory.
 public class PlayerUtil {
     private static final Map<String, PlayerMemory> playerMemory = new HashMap<>();
+    private static PlayerMemory defaultProfile = null;
     public static PlayerMemory getPlayerMemory(Player player) {
         if(!playerMemory.containsKey(player.getUniqueId().toString())) {
             PlayerMemory playerToAdd = new PlayerMemory();
@@ -97,7 +98,7 @@ public class PlayerUtil {
             memory.setIntelligent(config.getInt("profile."+selectedProfileId+".stats.intelligent"));
 
         } else {
-            newProfileDefault(memory, 1);
+            newProfile(memory, 1);
         }
 
         PlayerUtil.setPlayerMemory(player, memory);
@@ -130,41 +131,60 @@ public class PlayerUtil {
 
             //If Profile exists but is making a new profile
             if(config.getString("profile."+profileId) == null) {
-                newProfileDefault(memory, profileId);
+                newProfile(memory, profileId);
             }
         } else {
-            newProfileDefault(memory, 1);
+            newProfile(memory, 1);
         }
 
         PlayerUtil.setPlayerMemory(player, memory);
     }
 
-    //TODO rename to newProfile
     //TODO make a config
-    //Sets the default values for any new player or profile //TODO rename to just newProfile?
-    public static void newProfileDefault(PlayerMemory memory, int profileId)
+    //Sets the default values for any new player or profile
+    public static void newProfile(PlayerMemory memory, int profileId)
     {
-        memory.setMaxHealth(100);
-        memory.setHealth(100);
-        memory.setMaxMana(100);
-        memory.setMana(100);
-        memory.setArmor(0);
-        memory.setLevel(1);
-        memory.setExperience(0);
-        memory.setRequiredExperience(100);
+        if(defaultProfile == null){
+            FileConfiguration config = Ratrpg.getInstance().getConfig(); //TODO check that this works
+            defaultProfile = new PlayerMemory();
+
+            defaultProfile.setMaxHealth(config.getDouble("stats.maxHealth"));
+            defaultProfile.setHealth(config.getDouble("stats.health"));
+            defaultProfile.setMaxMana(config.getDouble("stats.maxMana"));
+            defaultProfile.setMana(config.getDouble("stats.mana"));
+            defaultProfile.setArmor(config.getDouble("stats.armor"));
+            defaultProfile.setLevel(1);
+            defaultProfile.setExperience(0);
+            defaultProfile.setRequiredExperience(100);
+
+            defaultProfile.setPlayerClass(PlayerClass.NONE);
+
+            defaultProfile.setAgility(config.getInt("stats.agility"));
+            defaultProfile.setStrength(config.getInt("stats.strength"));
+            defaultProfile.setIntelligent(config.getInt("stats.intelligent"));
+        }
+
+        memory.setMaxHealth(defaultProfile.getMaxHealth());
+        memory.setHealth(defaultProfile.getHealth());
+        memory.setMaxMana(defaultProfile.getMaxMana());
+        memory.setMana(defaultProfile.getMana());
+        memory.setArmor(defaultProfile.getArmor());
+        memory.setLevel(defaultProfile.getLevel());
+        memory.setExperience(defaultProfile.getExperience());
+        memory.setRequiredExperience(defaultProfile.getRequiredExperience());
         memory.setSelectedProfileId(profileId);
 
         memory.setPlayerClass(PlayerClass.NONE);
 
-        memory.setAgility(0);
-        memory.setStrength(0);
-        memory.setIntelligent(0);
+        memory.setAgility(defaultProfile.getAgility());
+        memory.setStrength(defaultProfile.getStrength());
+        memory.setIntelligent(defaultProfile.getIntelligent());
     }
 
-    public static void newProfileDefault(Player player, int profileId)
+    public static void newProfile(Player player, int profileId)
     {
         PlayerMemory memory = getPlayerMemory(player);
-        newProfileDefault(memory, profileId);
+        newProfile(memory, profileId);
     }
 
     public static boolean hasNonePlayerClass(Player player) {

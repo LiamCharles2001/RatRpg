@@ -2,7 +2,9 @@ package com.ratrpg;
 
 import com.ratrpg.commands.*;
 import com.ratrpg.events.ExperienceChange;
+import com.ratrpg.events.PlayerInteract;
 import com.ratrpg.events.PlayerJoin;
+import com.ratrpg.items.ItemManager;
 import com.ratrpg.menus.ClassSelector;
 import com.ratrpg.menus.Menu;
 import com.ratrpg.menus.Profile;
@@ -29,10 +31,14 @@ public final class Ratrpg extends JavaPlugin {
             //Uses the config.yml as the default config file
             saveDefaultConfig();
 
+            //Create custom items
+            ItemManager.initItems();
+
             //Registers all events
             //Bukkit.getPluginManager().registerEvents(new HelloWorld(), this);
             Bukkit.getPluginManager().registerEvents(new PlayerJoin(), this);
             Bukkit.getPluginManager().registerEvents(new ExperienceChange(), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerInteract(), this);
 
             //Registers all commands
             //getCommand("heal").setExecutor(new Heal());
@@ -44,6 +50,7 @@ public final class Ratrpg extends JavaPlugin {
             new Profile(this);
             new Experience();
             new ClassSelector(this);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

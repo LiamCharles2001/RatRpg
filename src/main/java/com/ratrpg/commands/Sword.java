@@ -1,5 +1,6 @@
 package com.ratrpg.commands;
 
+import com.ratrpg.items.ItemManager;
 import com.ratrpg.utilities.CommandBase;
 import com.ratrpg.utilities.ItemCreator;
 import org.bukkit.Material;
@@ -21,6 +22,23 @@ public class Sword {
                 item.setUnbreakable(true);
 
                 player.getInventory().addItem(item.getItemStack());
+
+                return true;
+            }
+
+            @Override
+            public String getUsage() {
+                return "Sword takes no arguments";
+            }
+        };
+
+        new CommandBase("ssword", "Gives you a sword", true)
+        {
+            @Override
+            public boolean onCommand(CommandSender sender, String[] arguments) {
+                Player player = (Player) sender;
+
+                player.getInventory().addItem(ItemManager.wand);
 
                 return true;
             }

@@ -1,11 +1,9 @@
 package com.ratrpg.menus;
 
 import com.ratrpg.Ratrpg;
-import com.ratrpg.data.PlayerClass;
 import com.ratrpg.data.PlayerMemory;
 import com.ratrpg.utilities.CommandBase;
 import com.ratrpg.utilities.MenuUtil;
-import com.ratrpg.utilities.Message;
 import com.ratrpg.utilities.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,7 +16,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import static com.ratrpg.data.PlayerClass.getClassName;
-import static com.ratrpg.utilities.PlayerUtil.switchClass;
 
 public class ProfileSelector implements Listener {
 
@@ -111,7 +108,7 @@ public class ProfileSelector implements Listener {
                 break;
             case 4:
                 PlayerMemory memory = PlayerUtil.getPlayerMemory(player);
-                PlayerUtil.newProfileDefault(player, memory.getSelectedProfileId());
+                PlayerUtil.newProfile(player, memory.getSelectedProfileId());
                 player.closeInventory();
                 break;
         }
