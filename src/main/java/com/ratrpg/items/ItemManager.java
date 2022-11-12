@@ -2,6 +2,8 @@ package com.ratrpg.items;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -40,6 +42,7 @@ public class ItemManager {
         ItemStack item = new ItemStack(Material.IRON_HOE, 1);  //Item
         ItemMeta meta = item.getItemMeta();                        //Item Data
         meta.setDisplayName("Fire Staff");
+        meta.isUnbreakable();
 
         meta.addEnchant(Enchantment.LUCK, 1, false);
 
