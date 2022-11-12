@@ -39,6 +39,7 @@ public class Sword {
                 Player player = (Player) sender;
 
                 player.getInventory().addItem(ItemManager.wand);
+                player.getInventory().addItem(ItemManager.fireStaff);
 
                 return true;
             }

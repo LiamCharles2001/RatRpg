@@ -100,6 +100,7 @@ public class ProfileSelector implements Listener {
                 PlayerUtil.savePlayerData(player);
                 PlayerUtil.switchPlayerData(player, 3);
                 player.closeInventory();
+                break;
             case 2:
                 Profile.getInstance().openProfile(player);
                 break;

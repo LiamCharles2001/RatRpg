@@ -11,9 +11,11 @@ import java.util.List;
 
 public class ItemManager {
     public static ItemStack wand;
+    public static ItemStack fireStaff;
 
     public static void initItems() {
         createWand();
+        createFireStaff();
     }
 
     private static void createWand() {
@@ -31,5 +33,25 @@ public class ItemManager {
 
         item.setItemMeta(meta);
         wand = item;
+    }
+
+    private static void createFireStaff()
+    {
+        ItemStack item = new ItemStack(Material.IRON_HOE, 1);  //Item
+        ItemMeta meta = item.getItemMeta();                        //Item Data
+        meta.setDisplayName("Fire Staff");
+
+        meta.addEnchant(Enchantment.LUCK, 1, false);
+
+        List<String> lores = new ArrayList<>();                    //Item Text
+        lores.add("Right click to cast fire ball");
+        lores.add("Item Ability: Fireball");
+        meta.setLore(lores);
+
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
+        item.setItemMeta(meta);
+        fireStaff = item;
     }
 }
