@@ -1,7 +1,10 @@
 package com.ratrpg.events;
 
+import com.ratrpg.Ratrpg;
 import com.ratrpg.items.ItemManager;
+import com.ratrpg.utilities.KnockBack;
 import com.ratrpg.utilities.Message;
+import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -11,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class PlayerInteract implements Listener {
@@ -32,20 +36,54 @@ public class PlayerInteract implements Listener {
             Message.send(player, "Boom.");
             return;
         }
-
         if (event.getItem().getItemMeta().equals(ItemManager.fireStaff.getItemMeta())) {
-            fireblast(event.getPlayer());
+            tripleShot(event.getPlayer());
             return;
         }
     }
 
+    //Cool heal: player.spawnParticle(Particle.TOTEM, loc, 10, 0, 0, 0);
+    private static void fireshot(Player player) {
+        new BukkitRunnable() {
+            Vector dir = player.getLocation().getDirection().normalize();
+            Location loc = player.getLocation();
+            double t = 0;
+
+            public void run() {
+                t += 1.5; //Speed
+                double x = dir.getX() * t;
+                double y = dir.getY() * t + 1.5;
+                double z = dir.getZ() * t;
+                loc.add(x, y, z);
+                player.spawnParticle(Particle.FIREWORKS_SPARK, loc, 0, 0, 0, 0);
+//TODO take away that fact it can pen blocks
+                for (Entity e : loc.getChunk().getEntities()) {
+                    if (e.getLocation().distance(loc) < 1.9) { //Hitbox
+                        if (!e.equals(player)) {
+                            if (e instanceof LivingEntity) {
+                                //e.setFireTicks(20 * 5); //5 secs
+                                ((LivingEntity) e).damage(2);
+                                KnockBack.applyKnockback(((LivingEntity) e), player, 0);
+                            }
+                        }
+                    }
+                }
+
+                loc.subtract(x, y, z);
+                if (t > 25) { //Lifetime
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(Ratrpg.getInstance(), 0, 1);
+    }
+
+    //TODO cooldown/mana
     private static void fireblast(Player player) {
 
         Fireball fireball = player.launchProjectile(Fireball.class);
         fireball.setBounce(false);
         fireball.setIsIncendiary(false);
-        fireball.setYield(2);
-        fireball.setSilent(true);
+        fireball.setYield(1.25f);
         //fireball.addPassenger(player);
     }
 
@@ -88,9 +126,9 @@ public class PlayerInteract implements Listener {
             if (fireball.getShooter() instanceof Player) {
                 Player shooter = (Player) fireball.getShooter();
 
-                //Stops self damge
-                if(event.getEntity() == shooter) {
-                   event.setCancelled(true);
+                //Stops self damage
+                if (event.getEntity() == shooter) {
+                    event.setCancelled(true);
                 }
 
                 //TODO remove getItemInHand, PlayerInventory
@@ -101,7 +139,8 @@ public class PlayerInteract implements Listener {
         }
     }
 
-    @EventHandler
+    //TODO I dont need this here, but keep for later
+    /*@EventHandler
     public void onShoot(EntityShootBowEvent event) {
 
         if (!(event.getProjectile() instanceof Arrow)) {
@@ -138,23 +177,16 @@ public class PlayerInteract implements Listener {
             arrow2.setShooter(event.getEntity());
             arrow2.setVelocity(arrow.getVelocity().rotateAroundY(Math.toRadians(-30)));
         }
-    }
+    }*/
 
     //TODO move to own event
     @EventHandler
     public void onFrameBrake(HangingBreakEvent event) {
         //TODO create a way for players to break, maybe item frame breaker
 
-       // if (event.getCause().toString().equals("ENTITY") || event.getCause().toString().equals("EXPLOSION")) {
-        //    event.setCancelled(true);
-        //}
-
-        //e.getEntity().getType().equals(EntityType.PLAYER)
-        //e.getEntity() instanceof Player
-        if (event.getEntity().getType().equals(EntityType.PLAYER)) {
-            //Important: The class Player, not a variable. This works because Entity is a subclass of Player
-            //Do stuff here
-            System.out.println("2: "+event.getEntity());
+        //TODO make a debugBrakingStick
+        if (event.getCause().toString().equals("ENTITY") || event.getCause().toString().equals("EXPLOSION")) {
+            event.setCancelled(true);
         }
     }
 }
