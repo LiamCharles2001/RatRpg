@@ -5,6 +5,7 @@ import com.ratrpg.items.ItemManager;
 import com.ratrpg.utilities.KnockBack;
 import com.ratrpg.utilities.Message;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -58,8 +59,9 @@ public class PlayerInteract implements Listener {
 
                 //TODO Test this
                 Message.send(player, "1: "+loc.getBlock().toString() );
-                if(loc.getBlock() != null) {
-                    Message.send(player, "2.");
+                Message.send(player, "2: "+loc.getWorld().getBlockAt(loc).getType().toString() );
+                if(loc.getWorld().getBlockAt(loc).getType() != Material.AIR) {
+                    Message.send(player, "3.");
                     this.cancel();
                 }
 
