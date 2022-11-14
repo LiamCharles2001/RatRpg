@@ -1,5 +1,6 @@
 package com.ratrpg;
 
+import com.ratrpg.abilities.AbilityManager;
 import com.ratrpg.commands.*;
 import com.ratrpg.events.ExperienceChange;
 import com.ratrpg.events.PlayerInteract;
@@ -33,6 +34,7 @@ public final class Ratrpg extends JavaPlugin {
 
             //Create custom items
             ItemManager.initItems();
+            AbilityManager.initAbilities();
 
             //Registers all events
             //Bukkit.getPluginManager().registerEvents(new HelloWorld(), this);

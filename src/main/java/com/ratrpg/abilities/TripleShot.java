@@ -1,15 +1,13 @@
 package com.ratrpg.abilities;
 
-import com.ratrpg.utilities.Message;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-public class TripleShot extends BaseAbility {
+public class TripleShot extends AbilityBase {
 
-    @Override
-    public void createAbility() {
-        this.name = "";
+    public TripleShot(){
+        this.name = "Tripleshot";
     }
 
     @Override
@@ -31,10 +29,5 @@ public class TripleShot extends BaseAbility {
         arrow2.setDamage(arrow.getDamage());
         arrow2.setShooter(player);
         arrow2.setVelocity(arrow.getVelocity().rotateAroundY(Math.toRadians(-30)));
-
-        //hide arrow or particle deal dmg
-
-        Message.send(player, "Floom!");
     }
 }
-
