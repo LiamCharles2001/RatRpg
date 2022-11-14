@@ -10,6 +10,8 @@ import org.bukkit.material.MaterialData;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//TODO refactor or move this or rename this to base
 public class ItemCreator {
     private ItemStack itemStack;
 

@@ -1,10 +1,8 @@
 package com.ratrpg.commands;
 
 import com.ratrpg.items.ItemManager;
-import com.ratrpg.utilities.CommandBase;
 import com.ratrpg.utilities.ItemCreator;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

@@ -2,7 +2,7 @@ package com.ratrpg.menus;
 
 import com.ratrpg.Ratrpg;
 import com.ratrpg.data.PlayerMemory;
-import com.ratrpg.utilities.CommandBase;
+import com.ratrpg.commands.CommandBase;
 import com.ratrpg.utilities.MenuUtil;
 import com.ratrpg.utilities.PlayerUtil;
 import org.bukkit.Bukkit;

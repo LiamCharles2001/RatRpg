@@ -1,6 +1,5 @@
 package com.ratrpg.commands;
 
-import com.ratrpg.utilities.CommandBase;
 import com.ratrpg.utilities.Message;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -1,7 +1,6 @@
 package com.ratrpg.commands;
 
 import com.ratrpg.Ratrpg;
-import com.ratrpg.utilities.CommandBase;
 import com.ratrpg.utilities.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

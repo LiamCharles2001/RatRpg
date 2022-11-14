@@ -1,6 +1,7 @@
-package com.ratrpg.utilities;
+package com.ratrpg.commands;
 
 import com.ratrpg.Ratrpg;
+import com.ratrpg.utilities.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
