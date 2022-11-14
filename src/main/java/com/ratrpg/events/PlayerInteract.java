@@ -11,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -32,7 +31,7 @@ public class PlayerInteract implements Listener {
 
         if (event.getItem().getItemMeta().equals(ItemManager.wand.getItemMeta())) {
             Player player = event.getPlayer();
-            player.getWorld().createExplosion(player.getLocation(), 2f);      //player.getWorld(). HAS some neat stuff
+            player.getWorld().createExplosion(player.getLocation(), 2f);
             Message.send(player, "Boom.");
             return;
         }
@@ -42,21 +41,28 @@ public class PlayerInteract implements Listener {
         }
     }
 
-    //Cool heal: player.spawnParticle(Particle.TOTEM, loc, 10, 0, 0, 0);
     private static void fireshot(Player player) {
         new BukkitRunnable() {
             Vector dir = player.getLocation().getDirection().normalize();
             Location loc = player.getLocation();
-            double t = 0;
+            double tick = 0;
 
             public void run() {
-                t += 1.5; //Speed
-                double x = dir.getX() * t;
-                double y = dir.getY() * t + 1.5;
-                double z = dir.getZ() * t;
+                tick += 1.5; //Speed
+                double x = dir.getX() * tick;
+                double y = dir.getY() * tick + 1.5;
+                double z = dir.getZ() * tick;
                 loc.add(x, y, z);
                 player.spawnParticle(Particle.FIREWORKS_SPARK, loc, 0, 0, 0, 0);
-//TODO take away that fact it can pen blocks
+                //TODO take away that fact it can pen blocks
+
+                //TODO Test this
+                Message.send(player, "1: "+loc.getBlock().toString() );
+                if(loc.getBlock() != null) {
+                    Message.send(player, "2.");
+                    this.cancel();
+                }
+
                 for (Entity e : loc.getChunk().getEntities()) {
                     if (e.getLocation().distance(loc) < 1.9) { //Hitbox
                         if (!e.equals(player)) {
@@ -70,20 +76,20 @@ public class PlayerInteract implements Listener {
                 }
 
                 loc.subtract(x, y, z);
-                if (t > 25) { //Lifetime
+                if (tick > 25) { //Lifetime
                     this.cancel();
                 }
             }
         }.runTaskTimer(Ratrpg.getInstance(), 0, 1);
     }
 
-    //TODO cooldown/mana
     private static void fireblast(Player player) {
 
         Fireball fireball = player.launchProjectile(Fireball.class);
         fireball.setBounce(false);
         fireball.setIsIncendiary(false);
         fireball.setYield(1.25f);
+        //fireball.setTicksLived(); //TODO Test this
         //fireball.addPassenger(player);
     }
 
@@ -107,17 +113,10 @@ public class PlayerInteract implements Listener {
         arrow2.setShooter(player);
         arrow2.setVelocity(arrow.getVelocity().rotateAroundY(Math.toRadians(-30)));
 
-        player.spawnParticle(Particle.TOTEM, player.getEyeLocation(), 0, dir.getX() * 2D, dir.getY(), dir.getZ() * 2D);
-
         //hide arrow or particle deal dmg
 
         Message.send(player, "Floom!");
     }
-
-    //https://www.youtube.com/c/SyntaxErrorYT/videos  channel
-    //https://www.youtube.com/watch?v=3QQPNfcbeyk cooldowns
-    //https://www.youtube.com/watch?v=YZfCBBvOMN4
-    //https://www.youtube.com/watch?v=ZVGwlyHIzRA Particles
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
@@ -131,7 +130,6 @@ public class PlayerInteract implements Listener {
                     event.setCancelled(true);
                 }
 
-                //TODO remove getItemInHand, PlayerInventory
                 if (shooter.getItemInUse().getItemMeta().equals(ItemManager.fireStaff.getItemMeta())) {
                     event.setDamage(10.0);
                 }
@@ -139,80 +137,13 @@ public class PlayerInteract implements Listener {
         }
     }
 
-    //TODO I dont need this here, but keep for later
-    /*@EventHandler
-    public void onShoot(EntityShootBowEvent event) {
-
-        if (!(event.getProjectile() instanceof Arrow)) {
-            return;
-        }
-
-        if (!(event.getEntity() instanceof Player)) {
-            return;
-        }
-
-        if (event.getBow() == null) {
-            return;
-        }
-
-        if (event.getBow().getItemMeta() == null) {
-            return;
-        }
-
-        if (event.getBow().getItemMeta().getLore() == null) {
-            return;
-        }
-
-        if (event.getBow().getItemMeta().equals(ItemManager.fireStaff.getItemMeta())) {
-
-            Arrow arrow = (Arrow) event.getProjectile();
-
-            Arrow arrow1 = event.getEntity().getWorld().spawn(event.getEntity().getEyeLocation(), Arrow.class);
-            arrow1.setDamage(arrow.getDamage());
-            arrow1.setShooter(event.getEntity());
-            arrow1.setVelocity(arrow.getVelocity().rotateAroundY(Math.toRadians(30)));
-
-            Arrow arrow2 = event.getEntity().getWorld().spawn(event.getEntity().getEyeLocation(), Arrow.class);
-            arrow2.setDamage(arrow.getDamage());
-            arrow2.setShooter(event.getEntity());
-            arrow2.setVelocity(arrow.getVelocity().rotateAroundY(Math.toRadians(-30)));
-        }
-    }*/
 
     //TODO move to own event
     @EventHandler
     public void onFrameBrake(HangingBreakEvent event) {
-        //TODO create a way for players to break, maybe item frame breaker
 
-        //TODO make a debugBrakingStick
         if (event.getCause().toString().equals("ENTITY") || event.getCause().toString().equals("EXPLOSION")) {
             event.setCancelled(true);
         }
     }
 }
-
-
-/*//Left Click
-if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-getLogger().info("Player left clicked a block.");
-//With Element Axe?
-if(event.getMaterial() == Material.IRON_AXE) {
-if(element.get(player).equals(1)) {
-player.sendMessage("ICE!");
-}
-if(element.get(player).equals(2)) {
-player.sendMessage("FIRE");
-}
-if(element.get(player).equals(3)) {
-Location spawningpoint = loc.add(0.0, 1.5, 0.0);
-FallingBlock rock = w.spawnFallingBlock(spawningpoint, Material.GRASS, (byte) 0);
-Vector direction = loc.getDirection();
-Vector velocity = direction.multiply(2.0);
-Arrow arrow = w.spawnArrow(spawningpoint, velocity, (float) 0.6, (float) 12);
-arrow.setPassenger(rock);
-arrow.setShooter(player);
-rock.setDropItem(false);
-}
-}
-}
-}*/
