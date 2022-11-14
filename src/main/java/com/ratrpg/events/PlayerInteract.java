@@ -39,7 +39,7 @@ public class PlayerInteract implements Listener {
         }
         if (event.getItem().getItemMeta().equals(ItemManager.fireStaff.getItemMeta())) {
             //tripleShot(event.getPlayer());
-            AbilityManager.tripleShot.useAbility(event.getPlayer());
+            AbilityManager.fireshot.useAbility(event.getPlayer());
             return;
         }
     }
