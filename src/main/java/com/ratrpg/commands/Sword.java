@@ -38,6 +38,8 @@ public class Sword {
 
                 player.getInventory().addItem(ItemManager.wand);
                 player.getInventory().addItem(ItemManager.fireStaff);
+                player.getInventory().addItem(ItemManager.metorStaff);
+                player.getInventory().addItem(ItemManager.magicBow);
 
                 return true;
             }

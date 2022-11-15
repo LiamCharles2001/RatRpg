@@ -31,14 +31,11 @@ public class Fireshot extends AbilityBase{
                 double z = dir.getZ() * tick;
                 loc.add(x, y, z);
                 player.spawnParticle(Particle.FIREWORKS_SPARK, loc, 0, 0, 0, 0);
-                //TODO take away that fact it can pen blocks
 
-                //TODO Test this
-                Message.send(player, "1: "+loc.getBlock().toString() );
-                Message.send(player, "2: "+loc.getWorld().getBlockAt(loc).getType().toString() );
+                //Message.send(player, "2: "+loc.getWorld().getBlockAt(loc).getType().toString() );
                 if(loc.getWorld().getBlockAt(loc).getType() != Material.AIR) {
-                    Message.send(player, "3.");
                     this.cancel();
+                    return;
                 }
 
                 for (Entity e : loc.getChunk().getEntities()) {

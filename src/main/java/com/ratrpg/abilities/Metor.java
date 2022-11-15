@@ -1,13 +1,10 @@
 package com.ratrpg.abilities;
 
-import com.ratrpg.items.ItemManager;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class Fireblast extends AbilityBase{
-    public Fireblast(){
+public class Metor extends AbilityBase{
+    public Metor(){
         this.name = "Fireblast";
     }
     @Override

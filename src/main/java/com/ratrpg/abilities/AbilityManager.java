@@ -2,13 +2,13 @@ package com.ratrpg.abilities;
 
 public class AbilityManager {
     public static TripleShot tripleShot;
-    public static Fireblast fireblast;
+    public static Metor metor;
     public static Fireshot fireshot;
 
 
     public static void initAbilities() {
         tripleShot = new TripleShot();
-        fireblast = new Fireblast();
+        metor = new Metor();
         fireshot = new Fireshot();
     }
 }
